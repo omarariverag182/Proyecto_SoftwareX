@@ -23,7 +23,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
-    {System.out.println("ENTRANDO AL FILTRO DE SEGURIDAD");
+    {
         return http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authRequest -> 
@@ -48,5 +48,8 @@ public class SecurityConfig {
  * csrf (Cross-Site Request Forguery): se usa para validar autenticacion por token
  *      en las peticiones POST del servicio API, en este caso
  *      se desabilito usando: .csrf(csrf -> csrf.disable())
+ * 
+ * requestMatchers: realiza la conexion a la ruta identificada y permite todas, tambien indica los roles del usuario
+ * posteriormente realiza la autentificacion del token 
  * 
  */

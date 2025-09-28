@@ -1,5 +1,8 @@
-package com.lta.bancocanon.software_bancario.Controller;
+/*
+ * La clase controller expone las al API REST para realizar el debido proceso de registro e inicio de sesion
+ */
 
+package com.lta.bancocanon.software_bancario.Controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +21,6 @@ public class Controller {
 
     @PostMapping(value = "login")
     public ResponseEntity<AutentResponse> login(@RequestBody LoginRequest loginRequest){
-        System.out.println("ENTRANDO AL MÉTODO LOGIN DEL CONTROLADOR");
         return ResponseEntity.ok(autentService.login(loginRequest));
     }
     
@@ -28,6 +30,3 @@ public class Controller {
     }  
 }
 
-/*
- * El controller expone los metodos para generar la autentificacion
- */

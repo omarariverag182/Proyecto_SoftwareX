@@ -1,3 +1,16 @@
+/*
+ *CLASE AplicacionConfig:
+ * Se usa la anotacion AutentificationManager para realizar la autentificacion del usuario.
+ * 
+ * METODOS:
+ * autheticationProvider (autenticacion de proveedor):
+ *  Obtiene el usuario desde usuarioDetailsService por medio del usuarioRepository y por medio la anotacion PasswordEncoder
+ *  realiza la codificacion de la contraseña.
+ *  
+ * 
+ */
+
+
 package com.lta.bancocanon.software_bancario.Config;
 
 import org.springframework.context.annotation.Bean;
@@ -28,13 +41,12 @@ public class AplicacionConfig {
 
     @Bean    
     public AuthenticationProvider authenticationProvider(){
-        
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(usuarioDetailService());
         authenticationProvider.setPasswordEncoder(contraseñaEncoder());
         return authenticationProvider;
-
     }
+
     @Bean
     public PasswordEncoder contraseñaEncoder() {
         return new BCryptPasswordEncoder();
@@ -42,7 +54,6 @@ public class AplicacionConfig {
 
     @Bean
     public UserDetailsService usuarioDetailService() {
-        System.out.println("ENTRANDO A USER DETAILS");
         return nomUsuario -> usuarioRepository.findByNomUsuario(nomUsuario)
             .orElseThrow(()-> new UsernameNotFoundException("Usuario no encontrado"));
     }

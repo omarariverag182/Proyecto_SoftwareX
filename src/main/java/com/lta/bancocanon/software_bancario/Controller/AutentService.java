@@ -1,3 +1,16 @@
+/*
+ * CLASE AutentService:
+ * Esta clase realiza la verificacion de existencia de usuario y realiza el registro a la base de datos
+ * 
+ * METODOS:
+ * login: 
+ *  Realiza la autenticacion del usuario ingresando a la base de datos extrayendo el usuario y la contraseña,
+ *  posteriormente realiza la autenticacion del inicio de sesion creando un token.
+ * 
+ * registro:
+ *  Realiza el registro de los campos de usuario en la base de datos y autentica al usuario con un token. 
+ */
+
 package com.lta.bancocanon.software_bancario.Controller;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,16 +36,11 @@ public class AutentService {
     private final AuthenticationManager authenticationManager;
 
     public AutentResponse login(LoginRequest loginRequest) {
-System.out.println("ENTRANDO AL SERVICIO DE AUTENTICACIÓN");
- 
     authenticationManager.authenticate(
     new UsernamePasswordAuthenticationToken(loginRequest.getNomUsuario(), loginRequest.getContrasena()));
-        System.out.println("USUARIO AUTENTICADO");
 
     UserDetails usuario = usuarioRepository.findByNomUsuario(loginRequest.getNomUsuario()).orElseThrow();
     String token = jwtService.getToken(usuario);    
-
-    System.out.println("GENERANDO TOKEN");
        
     return AutentResponse.builder()
             .token(token)
@@ -42,6 +50,7 @@ System.out.println("ENTRANDO AL SERVICIO DE AUTENTICACIÓN");
 
     public AutentResponse registro(RegistroRequest registroRequest) {
     Usuario usuario = Usuario.builder()
+                    .cedula(registroRequest.getCedula())
                     .nombre(registroRequest.getNombre())
                     .apellido(registroRequest.apellido)
                     .correo(registroRequest.getCorreo())

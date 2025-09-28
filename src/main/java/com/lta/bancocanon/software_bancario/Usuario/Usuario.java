@@ -35,6 +35,8 @@ public class Usuario implements UserDetails {
     @Column(nullable = false) //no permite realizar INSERT sin el dato nomUsuario 
     String nomUsuario;
     
+    String cedula;
+
     String contrasena;
     
     String nombre;

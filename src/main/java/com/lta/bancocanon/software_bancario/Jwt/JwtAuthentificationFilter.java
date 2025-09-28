@@ -1,3 +1,10 @@
+/*
+ * Clase que realiza el filtro de autentifiacion
+ * 
+ * Primero se realiza la verificacion de existencia del token, si es nulo no devuelve nada
+ * 
+*/
+
 package com.lta.bancocanon.software_bancario.Jwt;
 
 import java.io.IOException;
@@ -26,6 +33,7 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -34,36 +42,29 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
         final String token = getTokenFromRequest(request);
         final String nomUsuario;
        
-    
-        if (token ==null) {
-                System.out.println("VALIDANDO TOKEN");
-       
+        if (token == null) {
             filterChain.doFilter(request, response);
-            System.out.println("TOKEN NULO");
             return;
         }
-            System.out.println("INICIANDO VARIABLE NOMUSUARIO");
+        
         nomUsuario = jwtService.extractUsername(token);
 
         if (nomUsuario != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-           System.out.println("USANDO USERDETAILS");
             UserDetails userDetails = userDetailsService.loadUserByUsername(nomUsuario);
 
             if (jwtService.isTokenValid(token, userDetails)) {
-                System.out.println("VALIDANDO TOKEN");
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                     userDetails, 
                     null, 
                     userDetails.getAuthorities());
-                System.out.println("AUTORIZANDO ACCESO");
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-        System.out.println("HACIENDO FILTERCHAIN");
         filterChain.doFilter(request, response);
     }
+
 
     private String getTokenFromRequest(HttpServletRequest request) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
