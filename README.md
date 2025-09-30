@@ -12,33 +12,33 @@
     <th>Versión</th>
   </tr>
   <tr>
-    <th>Angular CLI</th>
-    <th>Framework aplicacion web</th>
-    <th>22.0.3</th>
+    <td>Angular CLI</td>
+    <td>Framework aplicacion web</td>
+    <td>22.0.3</td>
   </tr>
   <tr>
-    <th>Node.js</th>
-    <th>Servidor de desarrollo web</th>
-    <th>22.16.0</th>
+    <td>Node.js</td>
+    <td>Servidor de desarrollo web</td>
+    <td>22.16.0</td>
   </tr>
   <tr>
-    <th>TypeScript</th>
-    <th>Lenguaje desarrollo web</th>
-    <th>5.9</th>  
+    <td>TypeScript</td>
+    <td>Lenguaje desarrollo web</td>
+    <td>5.9</td>  
   </tr>
   <tr>
-    <th>Visual Studio Code</th>
-    <th>Interfaz de Desarrollo Integrado</th>
-    <th>1.104.2</th>
+    <td>Visual Studio Code</td>
+    <td>Interfaz de Desarrollo Integrado</td>
+    <td>1.104.2</td>
   </tr>
   <tr>
-    <th>Java (Maven)</th>
-    <th>Lenguaje desarrollo Backend</th>
-    <th>21</th>
+    <td>Java (Maven)</td>
+    <td>Lenguaje desarrollo Backend</td>
+    <td>21</td>
   </tr>
   <tr>
-    <th>Spring Boot 3</th>
-    <th>Framework desarrollo backend</th>
-    <th>3.5.5</th>
+    <td>Spring Boot 3</td>
+    <td>Framework desarrollo backend</td>
+    <td>3.5.5</td>
   </tr>
 </table>
