@@ -1,7 +1,10 @@
 <h1>
   SOFTWARE X
-</h1> <hr>
-
+</h1> 
+<p>
+  <b>SoftwareX</b> es una desarrolladora modular orientada al backend. Este módulo, con fines educativos, busca realizar la creación del módulo para el backend de un software bancario.</p>
+  
+<hr>
 <h2>
   TECNOLOGIAS:
 </h2>
