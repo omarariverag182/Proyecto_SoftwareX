@@ -49,10 +49,13 @@ public class AutentService {
         }
 
     public AutentResponse registro(RegistroRequest registroRequest) {
+        if (!registroRequest.getContrasena().equals(registroRequest.getConfirmContrasena())) {
+            throw new IllegalArgumentException("Las contraseñas no coinciden");
+        }
     Usuario usuario = Usuario.builder()
                     .cedula(registroRequest.getCedula())
                     .nombre(registroRequest.getNombre())
-                    .apellido(registroRequest.apellido)
+                    .apellido(registroRequest.getApellido())
                     .correo(registroRequest.getCorreo())
                     .telefono(registroRequest.getTelefono())
                     .nomUsuario(registroRequest.getNomUsuario())
@@ -60,6 +63,10 @@ public class AutentService {
                     .rol(Roles.USUARIO)
                     .build();     
                 
+                   
+                        usuarioRepository.save(usuario);
+                
+                    
                 usuarioRepository.save(usuario);
 
                 return AutentResponse.builder()

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class RegistroRequest {
     String nomUsuario;
     String contrasena;
+    String confirmContrasena;
     String cedula;
     String nombre;
     String apellido;

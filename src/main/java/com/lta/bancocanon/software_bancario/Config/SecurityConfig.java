@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .requestMatchers("/controller/registro","/controller/login").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
                 .requestMatchers("/usuario/**").hasRole("USUARIO")
+                .requestMatchers("/cuentas/ahorros").authenticated()
                 .anyRequest().authenticated()
                 )  
             .sessionManagement(sessionManager
@@ -39,6 +40,7 @@ public class SecurityConfig {
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthentificationFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
+        
         }       
     
 }

@@ -25,11 +25,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity     //Para el uso del JPA
-@Table (name = "Usuario", uniqueConstraints = {@UniqueConstraint(columnNames = {"nomUsuario"})})
+@Table (name = "CLIENTE", uniqueConstraints = {@UniqueConstraint(columnNames = {"nomUsuario"})})
 public class Usuario implements UserDetails {
     
     @Id     //anotacion que identifica al dato como id
     @GeneratedValue //genera el valor id de manera automatica
+    @Column(name = "id_cliente")
     Integer id;
     
     @Column(nullable = false) //no permite realizar INSERT sin el dato nomUsuario 
@@ -59,7 +60,8 @@ public class Usuario implements UserDetails {
     @Override
     public String getPassword() {
     return contrasena;
-    }
+   
+}
     @Override
     public String getUsername() {
         return nomUsuario;
