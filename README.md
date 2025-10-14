@@ -44,8 +44,5 @@
     <td>Framework desarrollo backend</td>
     <td>3.5.5</td>
   </tr>
-<<<<<<< HEAD
+
 </table>
-=======
-</table>
->>>>>>> c55500fbcb03c4ed4d97d30d7720fd842d89ae44
