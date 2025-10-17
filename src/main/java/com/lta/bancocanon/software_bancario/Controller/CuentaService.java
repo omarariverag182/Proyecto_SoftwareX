@@ -1,5 +1,7 @@
 package com.lta.bancocanon.software_bancario.Controller;
 
+import java.util.EnumSet;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
@@ -53,7 +55,7 @@ public class CuentaService {
         }
 
         String nombreTitular = usuario.getNomUsuario()+" "+usuario.getApellido();
-        String numeroGenerado = generarNumeroCuenta();
+        String numeroGenerado = generarNumeroCuenta(TipoCuenta.AHORROS);
         
         //Bloque que captura los datos del usuario loguedo para crear la cuenta
         CuentaDTO cuenta = CuentaDTO.builder()
@@ -68,12 +70,69 @@ public class CuentaService {
     }
 
     /*
-     * Metodo que genera un numero de cuenta de ahorros usando AH seguido de 6 numeros aleatorios unicos.
+     * crearCuentaCorriente()
      */
-    private String generarNumeroCuenta(){
+
+     public CuentaDTO crearCuentaCorriente(CuentaCorrienteRequest cuentaCorrienteRequest){
+        Usuario usuario = obtenerNomUsuarioAutent();
+
+        if (cuentaRepository.existsByUsuarioAndTipoCuenta(usuario, TipoCuenta.CORRIENTE)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe una cuenta con este usuario");
+        }
+
+        if (Boolean.FALSE.equals(cuentaCorrienteRequest.getAceptarTYC())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Debe aceptar terminos y condiciones");
+        }
+
+        if (!EnumSet.of(TipoCuenta.CORRIENTE).contains(TipoCuenta.CORRIENTE)) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de cuenta no válido.");
+        }
+
+        System.out.println("Tipo de cuenta asignado: " + TipoCuenta.CORRIENTE.name());
+        
+        String nombreTitular = usuario.getNomUsuario()+" "+usuario.getApellido();
+        String numeroGenerado = generarNumeroCuenta(TipoCuenta.CORRIENTE);
+        CuentaDTO cuenta = CuentaDTO.builder()
+                .numeroCuenta(numeroGenerado)
+                .nombreTitular(nombreTitular)
+                .tipoCuenta(TipoCuenta.CORRIENTE)
+                .saldo(cuentaCorrienteRequest.getSaldo())
+                .cupoDisponible(cuentaCorrienteRequest.getCupoDisponible())
+                .sobregiro(cuentaCorrienteRequest.getSobregiro())
+                .cupoSobregiro(cuentaCorrienteRequest.getCupoSobregiro())
+                .clave(cuentaCorrienteRequest.getClave())
+                .aceptarTYC(cuentaCorrienteRequest.getAceptarTYC())
+                .usuario(usuario)
+                .build();
+
+                return cuentaRepository.save(cuenta);
+                
+    }
+
+
+    /*
+     * Metodo que genera un numero de cuenta de ahorros usando un prefijo segun el tipo de cuenta 
+     * seguido de 6 numeros aleatorios unicos.
+     */
+    private String generarNumeroCuenta(TipoCuenta tipoCuenta){
+        String prefijo;
+
+        switch (tipoCuenta) {
+            case AHORROS:
+                prefijo = "AH-";
+                break;
+        case CORRIENTE:
+                prefijo = "CO-";
+                break;
+            default:
+                prefijo = "CU-";
+                break;
+        }
+        
+        
         String numero;
         do {
-            numero = "AH-"+String.format("%06d", (int)(Math.random()*1_000_000));
+            numero = prefijo+String.format("%06d", (int)(Math.random()*1_000_000));
         } while (cuentaRepository.existsByNumeroCuenta(numero));
         return numero;
     }

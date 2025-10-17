@@ -21,12 +21,19 @@ public class CuentaController {
     @Autowired
     private CuentaService cuentaService;
 
+/*
+ * EXPOSICION DEL ENDPOINT PARA CREAR CUENTA DE AHORROS
+ */
     @PostMapping("/ahorros")
     public ResponseEntity<CuentaDTO> crearCuentaAhorros(@Valid @RequestBody CuentaAhorrosRequest cuentaAhorrosRequest){
         CuentaDTO cuentaCreada = cuentaService.crearCuentaAhorros(cuentaAhorrosRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(cuentaCreada);
     }
+
+    @PostMapping("/corriente")
+    public ResponseEntity<CuentaDTO> crearCuentaCorriente(@Valid @RequestBody CuentaCorrienteRequest cuentaCorrienteRequest){
+        CuentaDTO cuentaCreada = cuentaService.crearCuentaCorriente(cuentaCorrienteRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cuentaCreada);
+    }
+
 }
-/*
- * EXPOSICION DEL ENDPOINT PARA CREAR CUENTA DE AHORROS
- */

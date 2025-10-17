@@ -39,7 +39,8 @@ public class CuentaDTO {
 
    String nombreTitular;
 
-    @Enumerated(EnumType.STRING)
+   @Enumerated(EnumType.STRING)
+   @Column(name = "tipo_cuenta",nullable = false)
    TipoCuenta tipoCuenta;
    
    @Column(nullable = false)
@@ -51,4 +52,19 @@ public class CuentaDTO {
    @JoinColumn(name = "cliente_id", nullable = false)//almacena la id del usuario logueado
    Usuario usuario;
 
+
+   @Column(nullable = true)
+   Double cupoDisponible;
+
+   @Column(nullable = true)
+   Boolean sobregiro;
+
+   @Column(nullable = true)
+   Double cupoSobregiro;
+
+   @Column(nullable = true)
+   String clave;
+
+   @Column(nullable = true)
+   Boolean aceptarTYC;
    } 

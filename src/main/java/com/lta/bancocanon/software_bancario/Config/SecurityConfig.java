@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
                 .requestMatchers("/usuario/**").hasRole("USUARIO")
                 .requestMatchers("/cuentas/ahorros").authenticated()
+                .requestMatchers("/cuentas/corriente").authenticated()
                 .anyRequest().authenticated()
                 )  
             .sessionManagement(sessionManager
