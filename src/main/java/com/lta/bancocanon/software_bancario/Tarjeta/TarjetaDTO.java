@@ -2,8 +2,6 @@ package com.lta.bancocanon.software_bancario.Tarjeta;
 
 import java.time.LocalDate;
 
-import org.springframework.data.annotation.Id;
-
 import com.lta.bancocanon.software_bancario.Cuentas.CuentaDTO;
 
 import jakarta.persistence.Column;
@@ -14,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,10 +32,11 @@ public class TarjetaDTO {
     @GeneratedValue
     Integer idTarjeta;
 
+    @Column(nullable = false, unique = true)
+    String numeroTarjeta;
+    
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    String numeroTarjeta;
-
     TipoTarjeta tipoTarjeta;
 
     Double cupoTotal;

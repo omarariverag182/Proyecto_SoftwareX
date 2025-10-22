@@ -61,16 +61,10 @@ public class AutentService {
                     .nomUsuario(registroRequest.getNomUsuario())
                     .contrasena(passwordEncoder.encode(registroRequest.getContrasena()))
                     .rol(Roles.USUARIO)
-                    .build();     
-                
-                   
-                        usuarioRepository.save(usuario);
-                
-                    
+                    .build();                 
                 usuarioRepository.save(usuario);
 
                 return AutentResponse.builder()
-                        .token(jwtService.getToken(usuario))
                         .build();
     }
 

@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.lta.bancocanon.software_bancario.Cuentas.CuentaDTO;
 import com.lta.bancocanon.software_bancario.Cuentas.CuentaRepository;
 import com.lta.bancocanon.software_bancario.Cuentas.TipoCuenta;
+import com.lta.bancocanon.software_bancario.Tarjeta.TarjetaService;
 import com.lta.bancocanon.software_bancario.Usuario.Usuario;
 import com.lta.bancocanon.software_bancario.Usuario.UsuarioRepository;
 
@@ -24,7 +25,9 @@ public class CuentaService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
+    
+    @Autowired
+    private TarjetaService tarjetaService;
     /*
      * Metodo para obtener el nombre de usuario, sí el usuario esta autenticado al iniciar sesion permitirá crear la cuenta.
      */
@@ -65,8 +68,8 @@ public class CuentaService {
             .saldo(cuentaAhorrosRequest.getSaldo())//Agrega el saldo inicial de la cuenta
             .usuario(usuario)//Obtiene la id del usuario en la BD y la inserta en este campo para relacionar la cuenta con el usuario
             .build();
-
-        return cuentaRepository.save(cuenta);
+            
+            return cuentaRepository.save(cuenta);
     }
 
     /*
@@ -105,7 +108,13 @@ public class CuentaService {
                 .usuario(usuario)
                 .build();
 
-                return cuentaRepository.save(cuenta);
+                CuentaDTO cuentaGuardada =  cuentaRepository.save(cuenta);
+        
+
+        if (TipoCuenta.CORRIENTE.equals(cuentaGuardada.getTipoCuenta())) {
+            tarjetaService.crearTarjeta(cuentaGuardada);
+        }
+    return cuentaGuardada;
                 
     }
 

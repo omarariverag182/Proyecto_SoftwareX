@@ -4,6 +4,7 @@
 
 package com.lta.bancocanon.software_bancario.Controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,8 @@ public class AutentController {
     
     @PostMapping(value = "registro")
     public ResponseEntity<AutentResponse> registro(@RequestBody RegistroRequest registroRequest){
-        return ResponseEntity.ok(autentService.registro(registroRequest));
+        AutentResponse autentResponse = autentService.registro(registroRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(autentResponse);
     }  
 }
 

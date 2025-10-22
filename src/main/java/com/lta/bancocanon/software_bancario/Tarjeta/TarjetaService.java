@@ -2,12 +2,19 @@ package com.lta.bancocanon.software_bancario.Tarjeta;
 
 import java.time.LocalDate;
 
+import org.springframework.stereotype.Service;
+
 import com.lta.bancocanon.software_bancario.Cuentas.CuentaDTO;
 import com.lta.bancocanon.software_bancario.Cuentas.TipoCuenta;
 
+@Service
 public class TarjetaService {
 
-    private TarjetaRepository tarjetaRepository;
+    private final TarjetaRepository tarjetaRepository;
+
+    public TarjetaService(TarjetaRepository tarjetaRepository ){
+        this.tarjetaRepository = tarjetaRepository;
+    }
 
     public TarjetaDTO crearTarjeta(CuentaDTO cuentaDTO){
         if (!TipoCuenta.CORRIENTE.equals(cuentaDTO.getTipoCuenta())){
@@ -47,7 +54,7 @@ public class TarjetaService {
         String numero;
         do {
             numero = prefijo+String.format("%06d", (int)(Math.random()*1_000_000));
-        } while (tarjetaRepository.existByNumeroTarjeta(numero));
+        } while (tarjetaRepository.existsByNumeroTarjeta(numero));
 
         return numero;
     }
