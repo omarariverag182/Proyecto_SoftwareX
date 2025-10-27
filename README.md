@@ -20,7 +20,7 @@ Repositorio proyecto software bancario para desarrollo modular
   <tr>
     <td>Angular CLI</td>
     <td>Framework aplicacion web</td>
-    <td>22.0.3</td>
+    <td>20.2.0</td>
   </tr>
   <tr>
     <td>Node.js</td>
