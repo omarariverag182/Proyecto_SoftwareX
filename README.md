@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MiBanco
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
@@ -57,3 +58,7 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+=======
+# Proyecto_SoftwareX
+Repositorio proyecto software bancario para desarrollo modular
+>>>>>>> 5e0d60f251d5768431db37d02c49555a78ae6e6c
