@@ -1,0 +1,138 @@
+/* layout general ya mantenido, solo ajustes para acciones */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f6fb;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  min-height: 100vh;
+  margin: 0;
+  padding: 2rem;
+}
+
+.form-container {
+  background: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 420px; /* ligeramente más ancho para acomodar botones */
+  text-align: left;
+  margin: 1.5rem auto;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: #3c00ff;
+  text-align: center;
+  margin-bottom: 1.75rem;
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #d0d0d8;
+  font-size: 0.98rem;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: #3c00ff;
+  box-shadow: 0 0 6px rgba(60, 0, 255, 0.12);
+  outline: none;
+}
+
+/* fila para la checkbox si quieres alinearla a la izquierda */
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0.6rem;
+}
+
+.remember-label {
+  font-weight: 500;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+/* acciones: Entrar (boton principal) y enlaces */
+.actions {
+  display: flex;
+  flex-direction: column; /* columna en móvil */
+  gap: 0.65rem;
+  margin-top: 0.9rem;
+  align-items: center;
+}
+
+/* Botón principal ancho y consistente */
+.btn {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* estilo primario ya conocido */
+.btn-primary {
+  display: inline-block;
+  background-color: #3c00ff;
+  color: white;
+  border: none;
+  padding: 0.85rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background-color: #2a00b8;
+}
+
+/* enlaces estilizados como botones planos */
+.btn-link {
+  display: inline-block;
+  width: 100%;
+  text-decoration: none;
+  text-align: center;
+  padding: 0.6rem;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #3c00ff;
+  background: transparent;
+}
+
+.btn-link:hover {
+  background: rgba(60,0,255,0.06);
+  text-decoration: underline;
+}
+
+/* pequeño ajuste para el enlace 'Crear cuenta' para diferenciarlo */
+.crear-cuenta {
+  margin-top: 0.15rem;
+}
+
+/* estilos responsivos: en pantallas grandes poner los enlaces en fila */
+@media (min-width: 720px) {
+  .actions {
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: stretch;
+  }
+}
