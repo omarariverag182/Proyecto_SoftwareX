@@ -15,3 +15,7 @@ public class CuentaAhorrosRequest {
     Double saldo;
     
 }
+/*
+ * Clase donde se obtienen datos para creación cuenta de ahorros.
+ * El nombre del titular se genera a partir de los datos de usuario al iniciar sesión.
+ */

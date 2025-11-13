@@ -4,3 +4,6 @@ public enum TipoTarjeta {
     CREDITO,
     DEBITO
 }
+/*
+ * TIPOS DE TARJETAS POSIBLES
+ */

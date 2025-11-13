@@ -4,3 +4,6 @@ public enum TipoCuenta {
     AHORROS, CORRIENTE;
     
 }
+/*
+ * CLASE TIPOS DE CUENTA EXISTENTES
+ */

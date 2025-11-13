@@ -1,5 +1,6 @@
 /*
  * La clase controller expone las al API REST para realizar el debido proceso de registro e inicio de sesion
+ * Adicional, expone el endpoint para cambiar la contraseña.
  */
 
 package com.lta.bancocanon.software_bancario.Controller;
@@ -29,6 +30,13 @@ public class AutentController {
     public ResponseEntity<AutentResponse> registro(@RequestBody RegistroRequest registroRequest){
         AutentResponse autentResponse = autentService.registro(registroRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(autentResponse);
-    }  
+    }
+    
+    @PostMapping("cambioContrasena")
+    public ResponseEntity<?> cambioContrasena(@RequestBody CambioContrasena CambioContrasenaRequest){
+        autentService.cambiarContrasena(CambioContrasenaRequest);
+        return ResponseEntity.ok("Contraseña restablecida correctamente");
+    }
+
 }
 

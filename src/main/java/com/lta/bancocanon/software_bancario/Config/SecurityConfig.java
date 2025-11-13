@@ -21,15 +21,34 @@ public class SecurityConfig {
     private final JwtAuthentificationFilter jwtAuthentificationFilter;
     private final AuthenticationProvider authenticationProvider; 
 
+/*
+ * IMPLEMENTACION DE CORS PARA EXPOSICION DEL BACKEND A PAGINA WEB
+ */
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
     {
         return http
             .csrf(csrf -> csrf.disable())
+
+            .cors(cors -> cors.configurationSource(request -> {
+                var corsConfig = new org.springframework.web.cors.CorsConfiguration();
+                corsConfig.setAllowedOrigins(java.util.List.of("http://localhost:4200"));
+                corsConfig.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                corsConfig.setAllowedHeaders(java.util.List.of("Authorization", "Content-Type", "X-XSRF-TOKEN"));
+                corsConfig.setAllowCredentials(true);
+
+                var source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", corsConfig);
+                return corsConfig;
+            }))
+/*
+ * CONFIGURACION DE ENDPOINTS DE ACCESO PERMITIDOS
+ * autheticated: es requerida una autenticacion para acceder al endpoint
+ */
             .authorizeHttpRequests(authRequest -> 
               authRequest   
-                .requestMatchers("/controller/registro","/controller/login").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
+                .requestMatchers("/controller/registro","/controller/login","/controller/cambioContrasena").permitAll()
                 .requestMatchers("/usuario/**").hasRole("USUARIO")
                 .requestMatchers("/cuentas/ahorros").authenticated()
                 .requestMatchers("/cuentas/corriente").authenticated()

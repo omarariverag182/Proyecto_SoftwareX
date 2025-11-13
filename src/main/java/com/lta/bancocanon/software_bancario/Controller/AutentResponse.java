@@ -13,3 +13,6 @@ public class AutentResponse {
 
     String token;
 }
+/*
+ * Clase donde se almacena el token de autenticación
+ */

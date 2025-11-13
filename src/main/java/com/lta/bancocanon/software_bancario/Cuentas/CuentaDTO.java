@@ -28,7 +28,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "CUENTA", uniqueConstraints = {@UniqueConstraint(columnNames = {"numeroCuenta"})})
 public class CuentaDTO {
-   
+
+/*
+ * DATOS QUE SERÁN INSERTADOS EN LAS TABLAS DE SQL SERVER
+ */
+
    @Id
    @GeneratedValue
    @Column(name = "id_cuenta")
@@ -54,7 +58,7 @@ public class CuentaDTO {
 
 
    @Column(nullable = true)
-   Double cupoDisponible;
+   Double cupo;
 
    @Column(nullable = true)
    Boolean sobregiro;

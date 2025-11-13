@@ -73,7 +73,12 @@ public class CuentaService {
     }
 
     /*
-     * crearCuentaCorriente()
+     * crearCuentaCorriente():
+     * Se verifica la existencia de un usuario con tipo de cuenta corriente, se arroja un error en caso de existencia
+     * Será necesario aceptar los terminos y condiciones para crear contraseña
+     * Se valida que la creacion de la cuenta sea de cuenta corriente.
+     * Se genera el nombre del titular al unir nombre y apellido del usuario autenticado al iniciar sesión.
+     * El número de cuenta se genera automaticamente con las iniciales, ejemplo: CO-000000
      */
 
      public CuentaDTO crearCuentaCorriente(CuentaCorrienteRequest cuentaCorrienteRequest){
@@ -90,8 +95,6 @@ public class CuentaService {
         if (!EnumSet.of(TipoCuenta.CORRIENTE).contains(TipoCuenta.CORRIENTE)) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de cuenta no válido.");
         }
-
-        System.out.println("Tipo de cuenta asignado: " + TipoCuenta.CORRIENTE.name());
         
         String nombreTitular = usuario.getNomUsuario()+" "+usuario.getApellido();
         String numeroGenerado = generarNumeroCuenta(TipoCuenta.CORRIENTE);
@@ -100,7 +103,7 @@ public class CuentaService {
                 .nombreTitular(nombreTitular)
                 .tipoCuenta(TipoCuenta.CORRIENTE)
                 .saldo(cuentaCorrienteRequest.getSaldo())
-                .cupoDisponible(cuentaCorrienteRequest.getCupoDisponible())
+                .cupo(cuentaCorrienteRequest.getCupo())
                 .sobregiro(cuentaCorrienteRequest.getSobregiro())
                 .cupoSobregiro(cuentaCorrienteRequest.getCupoSobregiro())
                 .clave(cuentaCorrienteRequest.getClave())

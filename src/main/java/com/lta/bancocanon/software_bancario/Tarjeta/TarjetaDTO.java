@@ -28,6 +28,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "TARJETA", uniqueConstraints = {@UniqueConstraint(columnNames = {"numeroTarjeta"})})
 public class TarjetaDTO {
 
+    /*
+     * DATOS QUE SE INSERTARÁN EN LA TABLA TARJETA EN SQL SERVER
+     */
+
     @Id
     @GeneratedValue
     Integer idTarjeta;

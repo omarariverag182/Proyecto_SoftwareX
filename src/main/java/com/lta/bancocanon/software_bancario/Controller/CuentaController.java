@@ -29,7 +29,9 @@ public class CuentaController {
         CuentaDTO cuentaCreada = cuentaService.crearCuentaAhorros(cuentaAhorrosRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(cuentaCreada);
     }
-
+/*
+ * EXPOSICION DEL ENDPOINT PARA CREAR CUENTA CORRIENTE
+ */
     @PostMapping("/corriente")
     public ResponseEntity<CuentaDTO> crearCuentaCorriente(@Valid @RequestBody CuentaCorrienteRequest cuentaCorrienteRequest){
         CuentaDTO cuentaCreada = cuentaService.crearCuentaCorriente(cuentaCorrienteRequest);

@@ -1,21 +1,9 @@
-/*
- * CLASE AutentService:
- * Esta clase realiza la verificacion de existencia de usuario y realiza el registro a la base de datos
- * 
- * METODOS:
- * login: 
- *  Realiza la autenticacion del usuario ingresando a la base de datos extrayendo el usuario y la contraseña,
- *  posteriormente realiza la autenticacion del inicio de sesion creando un token.
- * 
- * registro:
- *  Realiza el registro de los campos de usuario en la base de datos y autentica al usuario con un token. 
- */
-
 package com.lta.bancocanon.software_bancario.Controller;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +23,13 @@ public class AutentService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
+
+    /*
+     * INICIO DE SESION (LOGIN):
+     * Se pedirá al usuario su nombre de usuario y contraseña.
+     * Al iniciar sesión se devolverá un token de autenticacion de usuario.
+     * Si el usuario no existe se enviará el mensaje de error.
+     */
     public AutentResponse login(LoginRequest loginRequest) {
     authenticationManager.authenticate(
     new UsernamePasswordAuthenticationToken(loginRequest.getNomUsuario(), loginRequest.getContrasena()));
@@ -47,6 +42,29 @@ public class AutentService {
             .build();    
     
         }
+    /*
+     * SERVICIOS PARA CAMBIAR CONTRASEÑA:
+     * Se verifica la existencia del usuario, si no existe arroja el mensaje "usuario no encontrado"
+     * Si las contraseñas no coinciden se enviará el mensaje de error
+     * Si el usuario es encontrado y es confimada correctamente, se encriptará y se restablecerá la contraseña
+     */
+
+    public void cambiarContrasena(CambioContrasena cambioContrasena){
+        Usuario usuario = usuarioRepository.findByNomUsuario(cambioContrasena.getNomUsuario())
+        .orElseThrow(()-> new UsernameNotFoundException("Usuario no encontrado"));
+
+        if (!cambioContrasena.getNuevaContrasena().equals(cambioContrasena.getConfirmContrasena())) {
+            throw new IllegalArgumentException("Las contraseñas no coinciden");
+        }
+        usuario.setContrasena(passwordEncoder.encode(cambioContrasena.getNuevaContrasena()));
+        usuarioRepository.save(usuario);
+    }
+
+    /*REGISTRO
+    * El usuario deberá ingresar sus credenciales (cedula, nombre, apellido, correo, telefono, nombre de usuario, contraseña)
+    * La contraseña será encriptada y el rol usuario será definido automaticamente.
+    * El usuario deberá confirmar su contraseña para dar por terminada la creación de la cuenta.
+    */
 
     public AutentResponse registro(RegistroRequest registroRequest) {
         if (!registroRequest.getContrasena().equals(registroRequest.getConfirmContrasena())) {

@@ -16,6 +16,12 @@ public class TarjetaService {
         this.tarjetaRepository = tarjetaRepository;
     }
 
+    /*
+     * CREAR TARJETA:
+     * SOLO LAS CUENTAS CORRIENTES GENERAN TARJETA DE CRÉDITO AUTOMATICAMENTE.
+     * SE GENERA UN NUMERO DE TARJETA ALEATORIAMENTE, TD = Tarjeta Debito, TC = Tarjeta Credito
+     * 
+     */
     public TarjetaDTO crearTarjeta(CuentaDTO cuentaDTO){
         if (!TipoCuenta.CORRIENTE.equals(cuentaDTO.getTipoCuenta())){
             throw new IllegalArgumentException("Solo las cuentas corrientes generan tarjeta de crédito.");
@@ -26,8 +32,8 @@ public class TarjetaService {
         TarjetaDTO tarjetaDTO = TarjetaDTO.builder()
                     .numeroTarjeta(numeroGenerado)
                     .tipoTarjeta(TipoTarjeta.CREDITO)
-                    .cupoTotal(cuentaDTO.getCupoDisponible())
-                    .cupoDisponible(cuentaDTO.getCupoDisponible())
+                    .cupoTotal(cuentaDTO.getCupo())
+                    .cupoDisponible(cuentaDTO.getCupo())
                     .fechaExpiración(LocalDate.now().plusYears(5))
                     .cuenta(cuentaDTO)
                     .build();

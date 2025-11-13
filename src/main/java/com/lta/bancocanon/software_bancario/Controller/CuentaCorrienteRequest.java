@@ -16,7 +16,7 @@ public class CuentaCorrienteRequest {
     Double saldo;
 
     @DecimalMin(value = "0.0", inclusive = false)
-    Double cupoDisponible;
+    Double cupo;
     
     Double cupoSobregiro;    
     Boolean sobregiro;
