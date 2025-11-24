@@ -7,16 +7,22 @@ package com.lta.bancocanon.software_bancario.Controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.lta.bancocanon.software_bancario.Usuario.Usuario;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/controller")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200/")
 public class AutentController {
 
     private final AutentService autentService;
@@ -38,5 +44,10 @@ public class AutentController {
         return ResponseEntity.ok("Contraseña restablecida correctamente");
     }
 
-}
+    @GetMapping("/usuario/{nomUsuario}")
+    public ResponseEntity<Usuario> getCliente(@PathVariable String nomUsuario) {
+    Usuario usuario = autentService.obtenerClientePorUsuario(nomUsuario);
+    return ResponseEntity.ok(usuario);
 
+    }
+}

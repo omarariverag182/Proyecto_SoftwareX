@@ -1,11 +1,13 @@
 package com.lta.bancocanon.software_bancario.Controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.lta.bancocanon.software_bancario.Jwt.JwtService;
 import com.lta.bancocanon.software_bancario.Usuario.Roles;
@@ -54,7 +56,7 @@ public class AutentService {
         .orElseThrow(()-> new UsernameNotFoundException("Usuario no encontrado"));
 
         if (!cambioContrasena.getNuevaContrasena().equals(cambioContrasena.getConfirmContrasena())) {
-            throw new IllegalArgumentException("Las contraseñas no coinciden");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Las contraseñas no coinciden");
         }
         usuario.setContrasena(passwordEncoder.encode(cambioContrasena.getNuevaContrasena()));
         usuarioRepository.save(usuario);
@@ -67,13 +69,18 @@ public class AutentService {
     */
 
     public AutentResponse registro(RegistroRequest registroRequest) {
-        if (!registroRequest.getContrasena().equals(registroRequest.getConfirmContrasena())) {
+
+
+        String pass = registroRequest.getContrasena().trim();
+        String confirm = registroRequest.getConfirmContrasena().trim();
+
+        if (pass == null || confirm == null || !pass.equals(confirm)) {
             throw new IllegalArgumentException("Las contraseñas no coinciden");
         }
     Usuario usuario = Usuario.builder()
                     .cedula(registroRequest.getCedula())
                     .nombre(registroRequest.getNombre())
-                    .apellido(registroRequest.getApellido())
+                    .apellido(registroRequest.getApellido())    
                     .correo(registroRequest.getCorreo())
                     .telefono(registroRequest.getTelefono())
                     .nomUsuario(registroRequest.getNomUsuario())
@@ -86,4 +93,9 @@ public class AutentService {
                         .build();
     }
 
+//obtener cliente por usuario
+    public Usuario obtenerClientePorUsuario(String nomUsuario) {
+    return usuarioRepository.findByNomUsuario(nomUsuario)
+        .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+}
 }

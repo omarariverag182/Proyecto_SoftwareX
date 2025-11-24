@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,6 +21,10 @@ import com.lta.bancocanon.software_bancario.Usuario.UsuarioRepository;
 @Service
 public class CuentaService {
     
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     @Autowired
     private CuentaRepository cuentaRepository;
 
@@ -57,7 +62,7 @@ public class CuentaService {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"YA EXISTE UNA CUENTA DE AHORROS PARA ESTE USUARIO");
         }
 
-        String nombreTitular = usuario.getNomUsuario()+" "+usuario.getApellido();
+        String nombreTitular = usuario.getNombre()+" "+usuario.getApellido();
         String numeroGenerado = generarNumeroCuenta(TipoCuenta.AHORROS);
         
         //Bloque que captura los datos del usuario loguedo para crear la cuenta
@@ -106,7 +111,7 @@ public class CuentaService {
                 .cupo(cuentaCorrienteRequest.getCupo())
                 .sobregiro(cuentaCorrienteRequest.getSobregiro())
                 .cupoSobregiro(cuentaCorrienteRequest.getCupoSobregiro())
-                .clave(cuentaCorrienteRequest.getClave())
+                .clave(passwordEncoder.encode(cuentaCorrienteRequest.getClave()))
                 .aceptarTYC(cuentaCorrienteRequest.getAceptarTYC())
                 .usuario(usuario)
                 .build();
